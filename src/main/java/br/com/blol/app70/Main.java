@@ -1,72 +1,63 @@
 package br.com.blol.app70;
 
+import br.com.blol.app70.view.FuncionarioForm;
+import br.com.blol.app70.view.SetorForm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 /**
  * Created by cleverson on 22/10/15.
  */
 public class Main extends Application {
+
+    private static BorderPane root = new BorderPane();
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        primaryStage.setTitle("Exemplo JavaFX");
+
+        MenuBar menuBar = new MenuBar();
+        Menu menuCadastros = new Menu("Cadastros");
+
+        MenuItem mnSetor = new MenuItem("Setor");
+        MenuItem mnFuncionario = new MenuItem("Funcionario");
+
+        mnFuncionario.setOnAction( e -> { getRoot().setCenter(new FuncionarioForm()); });
+        mnSetor.setOnAction( e -> { getRoot().setCenter(new SetorForm()); });
+
+        menuCadastros.getItems().addAll(mnSetor,mnFuncionario);
+
+        menuBar.getMenus().addAll(menuCadastros);
 
 
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        root.setTop(menuBar);
+        root.setCenter(new FuncionarioForm());
 
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
-
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
-
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
-
-        Scene scene = new Scene(grid, 300, 275);
+        Scene scene = new Scene(root, 400, 350);
         primaryStage.setScene(scene);
-
-        //StackPane root = new StackPane();
-        //root.getChildren().add(btn);
-
-
-        //primaryStage.setScene(new Scene(root, 300, 250));
         primaryStage.show();
     }
+
+    public static BorderPane getRoot() {
+        return root;
+    }
+
+    public static void setRoot(BorderPane root) {
+        Main.root = root;
+    }
+
+
 }
