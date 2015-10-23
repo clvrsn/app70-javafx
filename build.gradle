@@ -1,0 +1,21 @@
+group 'br.com.blol'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+  from configurations.runtime
+  manifest {
+    attributes ('Main-Class': 'br.com.blol.app70.Main')
+  }
+}
